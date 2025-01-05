@@ -1,0 +1,48 @@
+Given an array of integers nums, sort the array in ascending order and return it.
+
+You must solve the problem without using any built-in functions in O(nlog(n)) time complexity and 
+
+with the smallest space complexity possible.
+
+Input: nums = [5,2,3,1]
+Output: [1,2,3,5]
+
+Explanation: After sorting the array, the positions of some numbers are not changed 
+(for example, 2 and 3),while the positions of other numbers are changed (for example, 1 and 5).
+
+1.quick sort
+public class Solution {
+    public int[] sortArray(int[] arr) {
+        // sort the array (e.g., quickSort)
+        quickSortHelper(arr, 0, arr.length - 1);
+        return arr;
+    }
+
+    private void quickSortHelper(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(arr, low, high);
+            quickSortHelper(arr, low, pivotIndex - 1);
+            quickSortHelper(arr, pivotIndex + 1, high);
+        }
+    }
+
+    private int partition(int[] arr, int low, int high) {
+        // partition logic
+        int pivot = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    private void swap(int[] arr, int a, int b) {
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
+}
